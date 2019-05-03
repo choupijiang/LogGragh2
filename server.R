@@ -1,6 +1,7 @@
 require(shiny)
 require(visNetwork)
 require(jsonify)
+require(jsonlite)
 data <-
   read.csv("./message-graph.csv",
            header = F,
@@ -8,6 +9,17 @@ data <-
 names(data) <- c("api", "from", "to", "value")
 data$title <- data$value
 apis <- unique(c(data$api))
+
+raw_df <- 
+  data.frame(
+    id   = 1:2,
+    json = 
+      c(
+        '{"user": "xyz2", "weightmap": {"P1":100,"P2":0}, "domains": ["a2","b2"]}', 
+        '{"user": "xyz1", "weightmap": {"P1":0,"P2":100}, "domains": ["a1","b1"]}'
+      ), 
+    stringsAsFactors = FALSE
+  )
 
 server <- function(input, output, session) {
   observe({
@@ -36,10 +48,9 @@ server <- function(input, output, session) {
                   ;}")
   })
     output$sample <-  renderPrint({
-      df <- data.frame(id = c("name"),
-                       val = input$current_node_id$node)
-      js <- to_json(df)
-      js
+      json <- paste("[",paste(raw_df$json, sep="", collapse = ","),"]")
+      mydf <- fromJSON(json)
+      toJSON(mydf, pretty=TRUE)
     })
   })
 }
