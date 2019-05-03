@@ -23,7 +23,7 @@ fluidPage(
                     ")
     )
     ),
-  headerPanel("MESSAGE GRAPH of senseID LOG"), 
+  headerPanel("Message Graph of senseID LOG"), 
   tags$head(
     # tags$script(src = 'https://code.jquery.com/jquery-1.11.1.min.js')
     includeScript("./json-viewer/jquery.json-viewer.js"),
