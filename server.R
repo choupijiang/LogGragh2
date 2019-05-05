@@ -2,6 +2,7 @@ require(shiny)
 require(visNetwork)
 require(jsonify)
 require(jsonlite)
+ 
 data <-
   read.csv("./message-graph.csv",
            header = F,
@@ -20,6 +21,7 @@ raw_df <-
       ), 
     stringsAsFactors = FALSE
   )
+schemas_df <- read.csv2("./schemas.csv", sep="\001", header = T, quote = "", allowEscapes=T, stringsAsFactors = FALSE)
 
 server <- function(input, output, session) {
   observe({
@@ -47,8 +49,14 @@ server <- function(input, output, session) {
                   Shiny.onInputChange('current_node_id', nodes);
                   ;}")
   })
+    
+ 
+    sample_subdf <- schemas_df[schemas_df$api==input$request_path&schemas_df$message==input$current_node_id$node, ]
+ 
     output$sample <-  renderPrint({
-      json <- paste("[",paste(raw_df$json, sep="", collapse = ","),"]")
+      json <- paste("[",paste(sample_subdf[1, "sample"], sep="", collapse = ","),"]")
+      # json <- sample_subdf[1, "sample"]
+      # print(json)
       mydf <- fromJSON(json)
       toJSON(mydf, pretty=TRUE)
     })
