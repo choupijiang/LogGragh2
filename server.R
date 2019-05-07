@@ -48,16 +48,13 @@ server <- function(input, output, session) {
                   ;}")
   })
 
-    active_node = input$current_node_id$node
-    print(active_node)
-    print(active_path)
-    mySchema <- schemas_df[schemas_df$request_path==active_path&schemas_df$message==active_node, ]
-  
-    json <- paste("[",paste(mySchema[, "json"], sep="", collapse = ","),"]") 
-    mydf <- fromJSON(json)
-    print(toJSON(mydf, pretty=TRUE))
+
     output$sample <-  renderPrint({
       # (schemas_df$api==input$request_path&schemas_df$message==input$current_node_id$node)
+      active_node = input$current_node_id$node 
+      mySchema <- schemas_df[schemas_df$request_path==active_path&schemas_df$message==active_node, ] 
+      json <- paste("[",paste(mySchema[, "json"], sep="", collapse = ","),"]") 
+      mydf <- fromJSON(json) 
       toJSON(mydf, pretty=TRUE)
     })
   })
