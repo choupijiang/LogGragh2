@@ -13,7 +13,7 @@ fluidPage(
   theme = "bootstrap.css",
   tags$head(
     tags$style(HTML("
-                    @import url('//fonts.googleapis.com/css?family=Lobster|Cabin:400,700');
+                    @import url('//fonts.googleapis.com/css?family=Roboto');
                     
                     h1 {
                     font-family: 'Lobster', cursive;
@@ -23,7 +23,7 @@ fluidPage(
                     ")
     )
     ),
-  headerPanel("Message Graph of senseID LOG"), 
+  headerPanel("Graph of senseID LOG"), 
   tags$head(
     # tags$script(src = 'https://code.jquery.com/jquery-1.11.1.min.js')
     includeScript("./json-viewer/jquery.json-viewer.js"),
@@ -43,18 +43,12 @@ fluidPage(
       hr(),
       conditionalPanel(
         condition = "input.schema == true",
-        HTML("<b>schemas of this message</b>")
-      ),
-      conditionalPanel(
-        condition = "input.schema == true",
-        HTML(
-          "
-          <div style='height:500px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>
-          <pre id='json-render' style='height:500px;'></pre>
-          </div>
-          "
-        )
-      )
+        HTML("<b>schemas of this message</b>
+              <div style='height:500px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>
+            <pre id='json-render' style='height:500px;'></pre>
+            </div>
+             ")
+      ) 
     ),
     
     column(
