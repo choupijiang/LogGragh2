@@ -4,11 +4,12 @@ require(jsonify)
 require(jsonlite)
 require(stringr)
  
-data <-
-  read.csv("./message-graph.csv",
-           header = F,
-           stringsAsFactors = F)
-names(data) <- c("api", "from", "to", "value")
+data1 <-
+  read.csv("./message-graph.csv",  sep="\001", header = T, quote = "",  stringsAsFactors = FALSE, allowEscapes=T)
+names(data1) <- c("api", "from", "to", "value")
+data <- data1[data1$value>50,]
+data1 <- NULL
+data <- data[!apply(is.na(data) | data == "", 1, all),]
 data$title <- data$value
 apis <- unique(c(data$api))
 
