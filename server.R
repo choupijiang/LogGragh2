@@ -7,7 +7,7 @@ require(stringr)
 data1 <-
   read.csv("./message-graph.csv",  sep="\001", header = T, quote = "",  stringsAsFactors = FALSE, allowEscapes=T)
 names(data1) <- c("api", "from", "to", "value")
-data <- data1[data1$value>50,]
+data <- data1[data1$value>10,]
 data1 <- NULL
 data <- data[!apply(is.na(data) | data == "", 1, all),]
 data$title <- data$value
